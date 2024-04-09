@@ -98,7 +98,7 @@ public class Personaje {
     }
 
     public String toString() {
-        return "{ " + nombre + " (V: " + vida + ", A: " + ataque + ", D: " + defensa + ") }";
+        return "{ " + nombre + " (V: " + vida + ", A: " + ataque + ", D: " + defensa + ", X: " + destreza + ") }";
     }
 
     public double getPesoMochila() {
