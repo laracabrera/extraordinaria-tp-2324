@@ -15,20 +15,4 @@ public class Utilidades {
         } while (numero < minimo || numero > maximo);
         return numero;
     }
-    public static long leerNumero(Scanner teclado, String mensaje, long minimo, long maximo) {
-        long numero;
-        do {
-            System.out.print(mensaje);
-            numero = teclado.nextLong();
-        } while (numero < minimo || numero > maximo);
-        return numero;
-    }
-    public static double leerNumero(Scanner teclado, String mensaje, double minimo, double maximo) {
-        double numero;
-        do {
-            System.out.print(mensaje);
-            numero = teclado.nextDouble();
-        } while (numero < minimo || numero > maximo);
-        return numero;
-    }
 }

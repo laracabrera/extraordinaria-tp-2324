@@ -129,7 +129,7 @@ public class Personaje {
                 sb.append(i).append("\n");
             }
         }
-        sb.append("\nPeso ").append(getPesoMochila()).append(" kg (").append(maxPesoPorPersonaje).append(")\n");
+        sb.append("\nPeso ").append(String.format("%.1f",getPesoMochila())).append(" kg (").append(maxPesoPorPersonaje).append(")\n");
         sb.append("Tu mochila vale ").append(getValorMochila()).append(" monedas");
         return sb.toString();
     }

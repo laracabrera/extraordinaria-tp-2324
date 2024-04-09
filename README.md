@@ -394,5 +394,6 @@ El proyecto de programación se evaluará teniendo en cuenta los siguientes aspe
 - El caso de estudio de partida supone el enunciado base para la realización del proyecto de  programación de la asignatura. Este enunciado podrá ser actualizado por el profesorado de la  asignatura con fines aclaratorios y/o ejemplificadores.
 
 ## Entrega del proyecto
-El Proyecto de Programación de la asignatura Taller de Programación (TP) consta de una entrega, cuyo plazo finaliza el 22 de diciembre de 2023, a las 23:59.
+El Proyecto de Programación de la asignatura Taller de Programación (TP) consta de una entrega. La fecha límite de entrega será anunciada en el Moodle de la asignatura.
+
 La práctica se entregará a través del Moodle de la asignatura. Cada entrega debe contener al menos un proyecto de IntelliJ IDEA con todos los ficheros de configuración, documentación y código fuente de dicho proyecto (no es necesario entregar los ficheros de bytecodes).
