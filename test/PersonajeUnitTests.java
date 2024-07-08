@@ -1,6 +1,10 @@
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.io.ByteArrayOutputStream;
+import java.io.PrintStream;
+import java.util.Scanner;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 public class PersonajeUnitTests {
@@ -67,6 +71,27 @@ public class PersonajeUnitTests {
 
     @Test
     public void testToString() {
-        assertEquals("{ Guerrero (V: 100, A: 10, D: 5) }", personaje.toString(), "El método toString no es correcto");
+        assertEquals("{ Guerrero (V: 100, A: 10, D: 5, X: 10) }", personaje.toString(), "El método toString no es correcto");
+    }
+
+    @Test
+    public void testCrearPersonaje() {
+        String entrada = """
+                Petarder
+                100
+                50
+                50
+                50""";
+        ByteArrayOutputStream outContent = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(outContent));
+        Personaje nuevoPersonaje = Personaje.crearPersonaje(new Scanner(entrada));
+        assertEquals("Petarder", nuevoPersonaje.getNombre(), "El nombre del personaje no es correcto");
+        assertEquals(100, nuevoPersonaje.getVida(), "La vida del personaje no es correcta");
+        assertEquals(50, nuevoPersonaje.getAtaque(), "El ataque del personaje no es correcto");
+        assertEquals(50, nuevoPersonaje.getDefensa(), "La defensa del personaje no es correcta");
+        assertEquals(50, nuevoPersonaje.getDestreza(), "La destreza del personaje no es correcta");
+        assertTrue(outContent.toString().contains("¿Cuánto ataque quieres tener? (1-148):"), "El rango del valor de ataque no se calcula correctamente");
+        assertTrue(outContent.toString().contains("¿Cuánta defensa quieres tener? (1-99):"), "El rango del valor de defensa no se calcula correctamente");
+        assertTrue(outContent.toString().contains("¿Cuánta destreza quieres tener? (1-50):"), "El rango del valor de destreza no se calcula correctamente");
     }
 }

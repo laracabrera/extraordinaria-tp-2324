@@ -1,0 +1,4 @@
+2;0;Trampa de Fuego;15
+2;2;Paredes Móviles;10
+2;2;Trampa de Electricidad;15
+3;1;Trampa de Hielo;15

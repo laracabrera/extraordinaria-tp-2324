@@ -1,0 +1,4 @@
+1;1;Armadura Encantada;5.0;200
+2;1;Sombrero de Mago;0.2;80
+2;1;Oro del Goblin;0.5;50
+3;1;Escala de Dragón;2.0;100

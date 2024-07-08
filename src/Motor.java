@@ -5,9 +5,27 @@ import java.io.IOException;
 import java.util.Random;
 import java.util.Scanner;
 
+/**
+ * Clase que representa el motor del juego
+ */
 public class Motor {
+    /** Mapa del juego */
     Sala[][] mapa;
-    private final int maxItemsPorSala, maxMonstruosPorSala, maxTrampasPorSala;
+    /** Número máximo de items por sala */
+    private final int maxItemsPorSala;
+    /** Número máximo de monstruos por sala */
+    private final int maxMonstruosPorSala;
+    /** Número máximo de trampas por sala */
+    private final int maxTrampasPorSala;
+
+    /**
+     * Constructor de la clase Motor
+     * @param filas Número de filas del mapa
+     * @param columnas Número de columnas del mapa
+     * @param maxItemsPorSala Número máximo de items por sala
+     * @param maxMonstruosPorSala Número máximo de monstruos por sala
+     * @param maxTrampasPorSalas Número máximo de trampas por sala
+     */
     public Motor(int filas, int columnas, int maxItemsPorSala, int maxMonstruosPorSala, int maxTrampasPorSalas) {
         this.mapa = new Sala[filas][columnas];
         this.maxItemsPorSala = maxItemsPorSala;
@@ -15,6 +33,11 @@ public class Motor {
         this.maxTrampasPorSala = maxTrampasPorSalas;
     }
 
+    /**
+     * Método que carga el mapa del juego
+     * @param ficheroMapa Fichero con la información del mapa
+     * @return Devuelve el mapa cargado
+     */
     Sala[][] cargarMapa(String ficheroMapa) {
         BufferedReader br = null;
         try {
@@ -43,6 +66,10 @@ public class Motor {
         return mapa;
     }
 
+    /**
+     * Método que carga los items del juego
+     * @param ficheroItems Fichero con la información de los items
+     */
     private void cargarItems(String ficheroItems) {
         BufferedReader br = null;
         try {
@@ -73,6 +100,10 @@ public class Motor {
         }
     }
 
+    /**
+     * Método que carga los monstruos del juego
+     * @param ficheroMonstruos Fichero con la información de los monstruos
+     */
     private void cargarMonstruos(String ficheroMonstruos) {
         BufferedReader br = null;
         try {
@@ -103,6 +134,10 @@ public class Motor {
         }
     }
 
+    /**
+     * Método que carga las trampas del juego
+     * @param ficheroTrampas Fichero con la información de las trampas
+     */
     private void cargarTrampas(String ficheroTrampas) {
         BufferedReader br = null;
         try {
@@ -131,6 +166,13 @@ public class Motor {
         }
     }
 
+    /**
+     * Método que inicia el motor del juego
+     * @param ficheroMapa Fichero con la información del mapa
+     * @param ficheroItems Fichero con la información de los items
+     * @param ficheroMonstruos Fichero con la información de los monstruos
+     * @param ficheroTrampas Fichero con la información de las trampas
+     */
     public void iniciar(String ficheroMapa, String ficheroItems, String ficheroMonstruos, String ficheroTrampas) {
         mapa = cargarMapa(ficheroMapa);
         cargarItems(ficheroItems);
@@ -138,34 +180,52 @@ public class Motor {
         cargarTrampas(ficheroTrampas);
     }
 
+    /**
+     * Método que devuelve una sala del mapa
+     * @param fila Fila de la sala
+     * @param columna Columna de la sala
+     * @return Devuelve la sala
+     */
     public Sala getSala(int fila, int columna) {
         return mapa[fila][columna];
     }
 
+    /**
+     * Método que muestra el mapa del juego de manera visual con ASCII. El personaje se representa con el símbolo '@'
+     * @param fila Fila actual del personaje
+     * @param columna Columna actual del personaje
+     * @return Devuelve el mapa del juego
+     */
     public String mostrarMapa(int fila, int columna) {
-    StringBuilder sb = new StringBuilder();
-    sb.append("╔");
-    sb.append("═".repeat(mapa[0].length)).append("╗\n");
-    for (int i = 0; i < mapa.length; i++) {
-        sb.append("║");  // Draw the left border of the frame
-        for (int j = 0; j < mapa[i].length; j++) {
-            if (mapa[i][j] != null) {
-                if (i == fila && j == columna) {
-                    sb.append("@");
+        StringBuilder sb = new StringBuilder();
+        sb.append("╔");
+        sb.append("═".repeat(mapa[0].length)).append("╗\n");
+        for (int i = 0; i < mapa.length; i++) {
+            sb.append("║");  // Draw the left border of the frame
+            for (int j = 0; j < mapa[i].length; j++) {
+                if (mapa[i][j] != null) {
+                    if (i == fila && j == columna) {
+                        sb.append("@");
+                    } else {
+                        sb.append("░");
+                    }
                 } else {
-                    sb.append("░");
+                    sb.append(" ");
                 }
-            } else {
-                sb.append(" ");
             }
+            sb.append("║\n");
         }
-        sb.append("║\n");
+        sb.append("╚");
+        sb.append("═".repeat(mapa[0].length)).append("╝\n");
+        return sb.toString();
     }
-    sb.append("╚");
-    sb.append("═".repeat(mapa[0].length)).append("╝\n");
-    return sb.toString();
-}
 
+    /**
+     * Método que implementa el bucle principal del juego
+     * @param teclado Scanner para leer la entrada del usuario
+     * @param personaje Personaje del juego
+     * @param random Objeto Random para generar números aleatorios
+     */
     public void jugar(Scanner teclado, Personaje personaje, Random random) {
         int fila = 0;
         int columna = 0;
@@ -237,6 +297,12 @@ public class Motor {
         System.out.println(personaje.infoMochila());
     }
 
+    /**
+     * Método que permite al personaje seleccionar un movimiento
+     * @param teclado Scanner para leer la entrada del usuario
+     * @param salaActual Sala actual en la que se encuentra el personaje
+     * @return Devuelve la sala a la que se ha movido el personaje
+     */
     public Sala seleccionarMovimiento(Scanner teclado, Sala salaActual) {
         int fila = salaActual.getFila();
         int columna = salaActual.getColumna();

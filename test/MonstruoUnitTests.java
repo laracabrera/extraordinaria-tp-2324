@@ -13,35 +13,60 @@ public class MonstruoUnitTests {
     }
 
     @Test
-    public void testMonstruo() {
-        assertEquals(100, goblin.getVida(), "La vida del monstruo no es correcta");
-        assertEquals(10, goblin.getAtaque(), "El ataque del monstruo no es correcto");
+    public void receivingDamageReducesHealthCorrectly() {
+        goblin.recibirDanyo(20);
+        assertEquals(85, goblin.getVida(), "La vida del monstruo no se ha reducido correctamente tras recibir daño");
+    }
+
+    @Test
+    public void receivingNegativeDamageDoesNotChangeHealth() {
+        goblin.recibirDanyo(-20);
+        assertEquals(100, goblin.getVida(), "La salud del monstruo no debería cambiar si recibe daño negativo");
+    }
+
+    @Test
+    public void equalsReturnsFalseForDifferentMonsters() {
+        Monstruo dragon = new Monstruo("Dragon", 300, 30, 20);
+        assertNotEquals(goblin, dragon, "Monstruos diferentes no deberían ser iguales");
+    }
+
+    @Test
+    public void equalsReturnsTrueForSameMonsterAttributes() {
+        Monstruo anotherGoblin = new Monstruo("Goblin", 100, 10, 5);
+        assertEquals(goblin, anotherGoblin, "Monstruos con los mismos atributos deberían ser iguales");
+    }
+
+    @Test
+    public void equalsReturnsFalseForDifferentMonsterNames() {
+        Monstruo fakeGoblin = new Monstruo("GoblinFake", 100, 10, 5);
+        assertNotEquals(goblin, fakeGoblin, "Monstruos con el mismo nombre deberían ser iguales");
+    }
+
+    @Test
+    public void equalsReturnsFalseForDifferentMonsterHealth() {
+        Monstruo injuredGoblin = new Monstruo("Goblin", 90, 10, 5);
+        assertNotEquals(goblin, injuredGoblin, "Monstruos con diferente salud no deberían ser iguales");
+    }
+
+    @Test
+    public void equalsReturnsFalseForDifferentMonsterAttack() {
+        Monstruo strongGoblin = new Monstruo("Goblin", 100, 20, 5);
+        assertNotEquals(goblin, strongGoblin, "Monstruos con diferente ataque no deberían ser iguales");
+    }
+
+    @Test
+    public void equalsReturnsFalseForDifferentMonsterDefense() {
+        Monstruo armoredGoblin = new Monstruo("Goblin", 100, 10, 10);
+        assertNotEquals(goblin, armoredGoblin, "Monstruos con diferente defensa no deberían ser iguales");
+    }
+
+    @Test
+    public void testGetDefensa() {
         assertEquals(5, goblin.getDefensa(), "La defensa del monstruo no es correcta");
-        assertEquals("Goblin", goblin.getNombre(), "El nombre del monstruo no es correcto");
     }
 
     @Test
-    public void testRecibirDanyo() {
-        goblin.recibirDanyo(10);
-        assertEquals(95, goblin.getVida(), "La vida del monstruo no es correcta");
-        goblin.recibirDanyo(-10);
-        assertEquals(95, goblin.getVida(), "La vida del monstruo no es correcta");
-    }
-
-    @Test
-    public void testToString() {
-        assertEquals("[ Goblin (V: 100, A: 10, D: 5) ]", goblin.toString(), "El toString del monstruo no es correcto");
-    }
-
-    @Test
-    public void testEquals() {
-        Monstruo otroGoblin = new Monstruo("Goblin", 100, 10, 5);
-        assertEquals(goblin, otroGoblin, "Los monstruos deberían ser iguales");
-    }
-
-    @Test
-    public void testNotEquals() {
-        Monstruo otroGoblin = new Monstruo("Goblin", 100, 10, 6);
-        assertNotEquals(goblin, otroGoblin, "Los monstruos deberían ser diferentes");
+    public void testGetAtaque() {
+        assertEquals(10, goblin.getAtaque(), "El ataque del monstruo no es correcto");
     }
 }

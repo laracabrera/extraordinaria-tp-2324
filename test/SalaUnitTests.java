@@ -1,6 +1,11 @@
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.io.ByteArrayOutputStream;
+import java.io.PrintStream;
+import java.lang.reflect.Method;
+import java.util.Scanner;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 public class SalaUnitTests {
@@ -115,5 +120,70 @@ public class SalaUnitTests {
     public void testAgregarTrampaRepetida() {
         salaNESO.agregarTrampa(trampa);
         assertFalse(salaNESO.agregarTrampa(trampa), "No se debería poder añadir una trampa repetida");
+    }
+
+    @Test
+    public void testSeleccionarMonstruo() {
+        Sala sala = new Sala("Sala", 5, 5, 5, 1, 1);
+        sala.agregarMonstruo(goblin);
+        sala.agregarMonstruo(orco);
+        String entrada = """
+                kashjdf
+                weroqi
+                sd
+                Goblin""";
+        ByteArrayOutputStream outContent = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(outContent));
+        assertEquals(goblin, sala.seleccionarMonstruo(new Scanner(entrada)),
+                "La selección de monstruos es incorrecta");
+        assertTrue(outContent.toString().contains("[ Goblin (V: 5, A: 5, D: 5) ]"), "No se listan los monstruos correctamente");
+        assertTrue(outContent.toString().contains("[ Orco (V: 5, A: 5, D: 5) ]"), "No se listan los monstruos correctamente");
+    }
+
+    @Test
+    public void testSeleccionaItem() {
+        Sala sala = new Sala("Sala", 5, 5, 5, 1, 1);
+        sala.agregarItem(espada);
+        sala.agregarItem(pocion);
+        String entrada = """
+                kashjdf
+                weroqi
+                sd
+                Espada""";
+        ByteArrayOutputStream outContent = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(outContent));
+        assertEquals(espada, sala.seleccionarItem(new Scanner(entrada)),
+                "La selección de items es incorrecta");
+        assertTrue(outContent.toString().contains("| Espada (Peso: 5,0, Valor: 5,0) |"), "No se listan los items correctamente");
+        assertTrue(outContent.toString().contains("| Poción (Peso: 5,0, Valor: 5,0) |"), "No se listan los items correctamente");
+    }
+
+    @Test
+    public void testGetFila() {
+        assertEquals(0, salaNESO.getFila(), "La fila de la sala no es correcta");
+    }
+
+    @Test
+    public void testGetColumna() {
+        assertEquals(0, salaNESO.getColumna(), "La columna de la sala no es correcta");
+    }
+
+    @Test
+    public void testGetTrampas() {
+        Sala sala = new Sala("Sala", 5, 5, 5, 1, 1);
+        sala.agregarTrampa(trampa);
+        sala.agregarTrampa(agujero);
+        assertArrayEquals(new Trampa[]{trampa, agujero, null, null, null}, sala.getTrampas(),
+                "Las trampas no son correctas");
+    }
+
+    @Test
+    public void testEliminarItem() {
+        Sala sala = new Sala("Sala", 5, 5, 5, 1, 1);
+        sala.agregarItem(espada);
+        sala.agregarItem(pocion);
+        sala.eliminarItem(espada.getDescripcion());
+        assertNull(sala.buscarItem(espada.getDescripcion()), "El item no se ha eliminado correctamente");
+        assertNotNull(sala.buscarItem(pocion.getDescripcion()), "Se ha eliminado un item incorrecto");
     }
 }

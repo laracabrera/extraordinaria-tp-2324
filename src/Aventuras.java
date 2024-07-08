@@ -4,7 +4,14 @@ import java.time.LocalDate;
 import java.util.Random;
 import java.util.Scanner;
 
+/**
+ * Clase principal de la aplicación.
+ */
 public class Aventuras {
+    /**
+     * Método principal de la aplicación.
+     * @param args Argumentos de la línea de comandos.
+     */
     public static void main(String[] args) {
         int filas = Integer.parseInt(args[0]);
         int columnas = Integer.parseInt(args[1]);
@@ -31,6 +38,11 @@ public class Aventuras {
         guardarPuntuacion(fichero_puntuaciones, jugador);
     }
 
+    /**
+     * Guarda la puntuación del jugador en el fichero de puntuaciones.
+     * @param ficheroPuntuaciones Fichero de puntuaciones.
+     * @param jugador Jugador.
+     */
     private static void guardarPuntuacion(String ficheroPuntuaciones, Personaje jugador) {
         try (java.io.PrintWriter pw = new java.io.PrintWriter(new java.io.FileWriter(ficheroPuntuaciones, true))) {
             pw.println(LocalDate.now() +"\t" + jugador + ", " + jugador.getValorMochila() + " monedas");
@@ -39,6 +51,10 @@ public class Aventuras {
         }
     }
 
+    /**
+     * Muestra por pantalla las puntuaciones guardadas en el fichero de puntuaciones.
+     * @param ficheroPuntuaciones Fichero de puntuaciones.
+     */
     private static void mostrarPuntuaciones(String ficheroPuntuaciones) {
         System.out.println("Puntuaciones:");
         try (Scanner sc = new Scanner(new File(ficheroPuntuaciones))) {
